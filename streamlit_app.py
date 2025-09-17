@@ -251,7 +251,7 @@ for i, item in enumerate(items, start=1):
         cols = st.columns([1, 5])
         with cols[0]:
             if thumb_url:
-                st.image(thumb_url, use_column_width=True)
+                st.image(thumb_url, use_container_width=True)
             else:
                 st.write("(썸네일 없음)")
         with cols[1]:
