@@ -48,7 +48,7 @@ def login_view():
     st.title("로그인")
     st.caption("인증 후 인기 동영상 대시보드가 표시됩니다.")
 
-    tab_general, tab_admin = st.tabs(["일반인 사용자자", "관리자"])
+    tab_general, tab_admin = st.tabs(["일반인 사용자", "관리자"])
 
     with tab_general:
         st.subheader("일반인 섹션")
