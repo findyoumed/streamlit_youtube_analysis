@@ -141,9 +141,8 @@ def get_channel_subscribers(api_key: str, channel_ids: List[str]) -> Dict[str, i
 st.set_page_config(page_title="YouTube 인기 동영상", page_icon="▶️", layout="wide")
 
 # -----------------------------
-# 인증 (세션 기반 로그인)
+# 인증 (세션 기반 로그인 - 비밀번호만)
 # -----------------------------
-EXPECTED_USER = _get_secret("AUTH_USERNAME", "")
 EXPECTED_PASS = _get_secret("AUTH_PASSWORD", "")
 
 if "authenticated" not in st.session_state:
@@ -152,24 +151,22 @@ if "authenticated" not in st.session_state:
 def logout():
     st.session_state.authenticated = False
     # 민감정보가 남지 않도록 비밀번호 입력값도 초기화 시도
-    st.session_state.pop("_login_user", None)
     st.session_state.pop("_login_pass", None)
     st.rerun()
 
 with st.sidebar:
     st.subheader("🔐 로그인")
     if not st.session_state.authenticated:
-        user = st.text_input("아이디", key="_login_user")
-        pw = st.text_input("비밀번호", type="password", key="_login_pass")
+        pw = st.text_input("접근 비밀번호", type="password", key="_login_pass")
         login_btn = st.button("로그인")
         if login_btn:
-            if EXPECTED_USER and EXPECTED_PASS and user == EXPECTED_USER and pw == EXPECTED_PASS:
+            if EXPECTED_PASS and pw == EXPECTED_PASS:
                 st.session_state.authenticated = True
                 st.success("로그인 성공")
                 st.rerun()
             else:
-                st.error("아이디 또는 비밀번호가 올바르지 않습니다.")
-        st.caption("관리자는 .streamlit/secrets.toml에서 자격 정보를 설정하세요.")
+                st.error("비밀번호가 올바르지 않습니다.")
+        st.caption("관리자는 .streamlit/secrets.toml 또는 .env에서 AUTH_PASSWORD를 설정하세요.")
     else:
         st.success("로그인됨")
         st.button("로그아웃", on_click=logout)
