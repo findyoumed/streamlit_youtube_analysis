@@ -33,8 +33,9 @@ def _rerun():
             pass
 
 # ---- Simple Auth (Intro Login) ----
-ADMIN_ID = "admin"
-ADMIN_PW = "$$teckyun73@@"
+# 관리자 자격 정보는 secrets(.streamlit/secrets.toml) 또는 .env에서 읽습니다.
+ADMIN_ID = st.secrets.get("ADMIN_ID", os.getenv("ADMIN_ID", ""))
+ADMIN_PW = st.secrets.get("ADMIN_PASSWORD", os.getenv("ADMIN_PASSWORD", ""))
 
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
