@@ -90,10 +90,16 @@ def login_view():
             user_pw = st.text_input("Password", value="", type="password", autocomplete="current-password")
             submitted_a = st.form_submit_button("로그인")
             if submitted_a:
-                if user_id == ADMIN_ID and user_pw == ADMIN_PW:
+                uid = (user_id or "").strip()
+                upw = (user_pw or "")
+                cfg_id = (ADMIN_ID or "").strip()
+                cfg_pw = (ADMIN_PW or "")
+                if not cfg_id or not cfg_pw:
+                    st.error("관리자 자격 정보가 설정되지 않았습니다. secrets.toml 또는 .env에 ADMIN_ID/ADMIN_PASSWORD를 설정하세요.")
+                elif uid == cfg_id and upw == cfg_pw:
                     st.session_state.authenticated = True
                     st.session_state.role = "admin"
-                    st.session_state.user_name = user_id
+                    st.session_state.user_name = uid
                     st.success("로그인 성공! 잠시만 기다려주세요…")
                     _rerun()
                 else:
