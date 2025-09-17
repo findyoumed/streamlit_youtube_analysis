@@ -48,14 +48,11 @@ def login_view():
     st.title("로그인")
     st.caption("인증 후 인기 동영상 대시보드가 표시됩니다.")
 
-    tab_general, tab_admin = st.tabs(["일반인", "관리자"])
+    tab_general, tab_admin = st.tabs(["일반인 사용자자", "관리자"])
 
     with tab_general:
         st.subheader("일반인 섹션")
-        st.info(
-            "비밀번호는 YTB001 ~ YTB100 범위에서 입력하세요.\n\n"
-            "예시: YTB001, YTB010, YTB042, YTB100"
-        )
+
         with st.form("login_form_general", clear_on_submit=False):
             name = st.text_input("성명", value="", placeholder="예) 홍길동")
             pw = st.text_input("Password", value="", type="password", placeholder="예) YTB001")
